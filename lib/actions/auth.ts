@@ -8,6 +8,8 @@ import { eq } from "drizzle-orm";
 import { headers } from "next/headers";
 import ratelimit from "../ratelimit";
 import { redirect } from "next/navigation";
+import { workflowClient } from "../workflow";
+import config from "../config";
 
 export const signInWithCredentaials = async (
 	params: Pick<AuthCredentials, "email" | "password">
@@ -17,7 +19,7 @@ export const signInWithCredentaials = async (
 	const ip = (await headers()).get("x-forwaded-for") || "127.0.0.1";
 	const { success } = await ratelimit.limit(ip);
 
-	if (!success) return redirect("/too-fast")
+	if (!success) return redirect("/too-fast");
 
 	try {
 		const result = await signIn("credentials", {
@@ -51,7 +53,7 @@ export const signUp = async (params: AuthCredentials) => {
 	const ip = (await headers()).get("x-forwaded-for") || "127.0.0.1";
 	const { success } = await ratelimit.limit(ip);
 
-	if (!success) return redirect("/too-fast")
+	if (!success) return redirect("/too-fast");
 
 	const existingUser = await db
 		.select()
@@ -75,6 +77,14 @@ export const signUp = async (params: AuthCredentials) => {
 			fullName,
 			universityId,
 			universityCard,
+		});
+
+		await workflowClient.trigger({
+			url: `${config.env.prodApiEndpoint}/api/workflow/onboarding`,
+			body: {
+				email,
+				fullName,
+			},
 		});
 
 		await signInWithCredentaials({ email, password });
