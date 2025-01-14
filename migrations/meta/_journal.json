@@ -1,0 +1,13 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1736827997539,
+      "tag": "0000_yummy_sabretooth",
+      "breakpoints": true
+    }
+  ]
+}
