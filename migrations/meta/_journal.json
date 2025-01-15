@@ -8,6 +8,20 @@
       "when": 1736827997539,
       "tag": "0000_yummy_sabretooth",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1736913876257,
+      "tag": "0001_cheerful_master_chief",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1736914914728,
+      "tag": "0002_magical_apocalypse",
+      "breakpoints": true
     }
   ]
 }
